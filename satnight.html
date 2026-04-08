@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturday Night Gimik</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            /* Dark lounge vibe */
+            background-color: #1a1a1a; 
+            background-image: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            font-family: 'Georgia', serif;
+            text-align: center;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        #container {
+            background: #262626;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #d4af37; /* Gold border like Black Label */
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        h1 {
+            color: #d4af37; /* Gold */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        /* Black Label Style */
+        #yesBtn {
+            background-color: #000;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        #yesBtn:hover {
+            background-color: #d4af37;
+            color: #000;
+        }
+
+        /* Bacardi Red Style */
+        #noBtn {
+            background-color: #7d0000;
+            color: white;
+            position: relative;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .drink-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="main-content">
+            <div class="drink-icon">🥃 🍷 🍾</div>
+            <h1 id="question">Gimik this Saturday night?</h1>
+            <p style="color: #888;">Jack, Black, or Bacardi?</p>
+            
+            <div class="buttons">
+                <button id="yesBtn" onclick="celebrate()">Let's Pour!</button>
+                <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">Pass</button>
+            </div>
+        </div>
+
+        <div id="success-message" class="hidden">
+            <div class="drink-icon">🍻 🔥 🥂</div>
+            <h1 style="color: #fff;">CHEERS! 🥂</h1>
+            <p>Get the glasses ready. It's going to be a long night.</p>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainContent = document.getElementById('main-content');
+        const successMessage = document.getElementById('success-message');
+        
+        let yesSize = 18;
+        let noClicks = 0;
+
+        const messages = [
+            "Are you sober?",
+            "One shot only?",
+            "Bacardi is waiting...",
+            "Don't be a KJ!",
+            "Jack is disappointed",
+            "Last chance for a refill!",
+            "The bar is closing!",
+            "Just say YES 🥃"
+        ];
+
+        function moveNoButton() {
+            // Update button text
+            if (noClicks < messages.length) {
+                noBtn.innerHTML = messages[noClicks];
+            }
+            
+            // Grow the "Yes" button
+            yesSize += 15;
+            yesBtn.style.fontSize = yesSize + "px";
+            yesBtn.style.padding = (yesSize/2) + "px " + (yesSize) + "px";
+
+            // Move the "No" button randomly
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed'; // Fixed works better for "running away"
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            noClicks++;
+        }
+
+        function celebrate() {
+            mainContent.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            noBtn.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
